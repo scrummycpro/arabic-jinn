@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabic to English Translator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Arabic to English Translator</h1>
+        <form id="translate-form" method="POST">
+            <div class="mb-3">
+                <label for="arabicText" class="form-label">Enter Arabic Text</label>
+                <textarea class="form-control" id="arabicText" name="text" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Translate</button>
+        </form>
+        <div class="mt-4">
+            <h3>Translated Text:</h3>
+            <div id="translatedText" class="p-3 border rounded bg-light"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#translate-form').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '/translate',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#translatedText').text(response.translated_text);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
